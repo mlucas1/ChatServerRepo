@@ -19,14 +19,14 @@ public class ChatServerThread implements Runnable {
         this.socket = socket;
         
         try {
-        	/* Define i/o for this thread (through the socket) */
+        	/*Define i/o for this thread (through the socket)*/
             this.out = new PrintWriter(this.socket.getOutputStream(), true);
             this.in  = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             
-            /* DEBUG */
+            /*DEBUG*/
             System.out.println("Client connected!");
             
-            /* Welcome the client */
+            /*Welcome the client*/
             this.out.println("Welcome!");
             
         } catch (IOException e) {
@@ -62,7 +62,7 @@ public class ChatServerThread implements Runnable {
                     return;
                 }
                 
-                //TODO 
+                //TODO
                 
             } catch (IOException e) {
                 /* On exception, stop the thread */

@@ -10,23 +10,24 @@ import java.net.Socket;
  * @author mlucas1
  * @version 9.11.13
  */
-public class ChatServerThread implements Runnable {
-	protected Socket         socket;
-	protected PrintWriter    out;
-	protected BufferedReader in;
+public class ChatServerThread {
+    
+    /* The client socket and IO we are going to handle in this thread */
+    protected Socket         socket;
+    protected PrintWriter    out;
+    protected BufferedReader in;
     
     public ChatServerThread(Socket socket) {
         this.socket = socket;
         
         try {
-        	/* Define i/o for this thread (through the socket) */
             this.out = new PrintWriter(this.socket.getOutputStream(), true);
             this.in  = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             
-            /* DEBUG */
+            /* Some debug */
             System.out.println("Client connected!");
             
-            /* Welcome the client */
+            /* Say hi to the client */
             this.out.println("Welcome!");
             
         } catch (IOException e) {
@@ -35,9 +36,9 @@ public class ChatServerThread implements Runnable {
     }
     
     public void run() {
-        /*	This thread will constantly listen for client input, and send it to the server.
-         	It will also output messages from other connected clients to this client.
-         */
+        /* Our thread is going to read lines from the client and parrot them back.
+           It will continue to do this until an exception occurs or the connection ends
+           */
         while (true) {
             try {
                 /* Get string from client */
@@ -62,7 +63,9 @@ public class ChatServerThread implements Runnable {
                     return;
                 }
                 
-                //TODO 
+                /* Otherwise parrot the text */
+                this.out.println("You said: " + fromClient);
+                System.out.println("Client said: " + fromClient);
                 
             } catch (IOException e) {
                 /* On exception, stop the thread */

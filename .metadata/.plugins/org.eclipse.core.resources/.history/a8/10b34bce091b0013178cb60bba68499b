@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -11,7 +10,6 @@ public class ChatServer {
 	/**
 	 * @param args
 	 */
-	@SuppressWarnings("resource")
 	public static void main(String[] args) { 
         /* Check port exists */
         if (args.length < 1) {
@@ -36,7 +34,7 @@ public class ChatServer {
                 /* Get a new client */
                 Socket clientSocket = serverSocket.accept();
                 
-                /* Create a thread for the client and start */
+                /* Create a thread for it and start! */
                 ChatServerThread clientThread = new ChatServerThread(clientSocket);
                 new Thread(clientThread).start();
                 
