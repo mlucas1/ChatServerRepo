@@ -1,14 +1,12 @@
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
  * @author mlucas1
  * @version 9.11.13
  */
 public class ChatServer {
-	
-	private ArrayList<ChatServerThread> loggedInUsers = new ArrayList<ChatServerThread>();
 	
 	/**
 	 * @param args
@@ -33,7 +31,7 @@ public class ChatServer {
             System.exit(1);
         }
         
-        /* Continuously listen for new clients and spin off threads for them */
+        /* In the main thread, continuously listen for new clients and spin off threads for them */
         while (true) {
             try {
                 /* Get a new client */

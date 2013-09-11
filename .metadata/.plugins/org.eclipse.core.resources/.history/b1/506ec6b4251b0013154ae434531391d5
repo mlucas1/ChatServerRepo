@@ -1,5 +1,5 @@
 import java.io.*;
-import java.net.*;
+import java.net.Socket;
 
 /**
  * Class ChatServerThread defines the way each new ChatServer client will interact with the server
