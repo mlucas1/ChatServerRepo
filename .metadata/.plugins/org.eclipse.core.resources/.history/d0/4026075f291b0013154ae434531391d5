@@ -37,7 +37,7 @@ public class ChatServer {
         /* Continuously listen for new clients and spin off threads for them */
         while (true) {
             
-        	ArrayList<Thread> activeThreads = new ArrayList<Thread>();
+        	ArrayList<ChatServerThread> activeThreads = new ArrayList<ChatServerThread>();
         	
         	try {
                 /* Get a new client */
