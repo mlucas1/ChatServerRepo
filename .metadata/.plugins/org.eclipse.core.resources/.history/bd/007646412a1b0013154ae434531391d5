@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class ChatServer {
 	
-	public static ArrayList<Thread> activeUsers = new ArrayList<Thread>();
+	
 	
 	/**
 	 * @param args
@@ -34,9 +34,10 @@ public class ChatServer {
             System.exit(1);
         }
         
-        /* Continuously listen for new clients and spin off threads for them */
+        /* Continuously listen for new clients and spin off threads for them, managing their communication */
         while (true) {
             
+        	Object lock =
         	ArrayList<Thread> activeThreads = new ArrayList<Thread>();
         	
         	try {
@@ -51,6 +52,8 @@ public class ChatServer {
                 System.out.println("Accept failed: " + e);
                 System.exit(1);
             }
+        	
+        	Sychronized ()
         }
 	}
 }
