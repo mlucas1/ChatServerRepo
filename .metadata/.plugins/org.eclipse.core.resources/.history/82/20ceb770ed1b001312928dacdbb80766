@@ -5,7 +5,7 @@ import java.net.*;
  * Class ChatServerThread defines the way each new ChatServer client will interact with the server
  * 
  * @author mlucas1
- * @version 9.12.13
+ * @version 9.11.13
  */
 public class ChatServerThread extends Thread {
 	protected Socket         	socket;
@@ -43,6 +43,14 @@ public class ChatServerThread extends Thread {
                 /* Get string from client */
                 String fromClient = this.in.readLine();
                 
+                /* If null, connection is closed, so just finish */
+                if (fromClient == null) {
+                    System.out.println("Client disconnected.");
+                    this.in.close();
+                    this.out.close();
+                    this.socket.close();
+                    return;
+                }
                 
                 //TODO Perform required functions if input is a command; otherwise send to all users
                 
@@ -54,31 +62,5 @@ public class ChatServerThread extends Thread {
             }
         }
     }
-    
-    private synchronized boolean setNickname(String s) {
-    	return false;
-    }
-    
-    private synchronized void broadCastMessage(String s) {
-    	
-    }
-    
-    private synchronized boolean disconnect() {
-    	return false;
-    }
-    
-    private int parse(String s) {
-    	return 0;
-    }
-    
-    public String getNickname() {
-    	return username;
-    }
-    
-    public PrintWriter getWriter() {
-    	return out;
-    }
-    
-    
 
 }

@@ -70,15 +70,5 @@ public class ChatServerThread extends Thread {
     private int parse(String s) {
     	return 0;
     }
-    
-    public String getNickname() {
-    	return username;
-    }
-    
-    public PrintWriter getWriter() {
-    	return out;
-    }
-    
-    
 
 }

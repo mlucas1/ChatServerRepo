@@ -72,13 +72,7 @@ public class ChatServerThread extends Thread {
     }
     
     public String getNickname() {
-    	return username;
+    	return "";
     }
-    
-    public PrintWriter getWriter() {
-    	return out;
-    }
-    
-    
 
 }

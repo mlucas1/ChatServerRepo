@@ -56,29 +56,17 @@ public class ChatServerThread extends Thread {
     }
     
     private synchronized boolean setNickname(String s) {
-    	return false;
+    	
     }
     
     private synchronized void broadCastMessage(String s) {
     	
     }
     
-    private synchronized boolean disconnect() {
-    	return false;
+    private boolean disconnect() {
+    	
     }
     
-    private int parse(String s) {
-    	return 0;
-    }
-    
-    public String getNickname() {
-    	return username;
-    }
-    
-    public PrintWriter getWriter() {
-    	return out;
-    }
-    
-    
+    private
 
 }
