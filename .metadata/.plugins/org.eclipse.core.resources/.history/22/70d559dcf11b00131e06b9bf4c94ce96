@@ -77,7 +77,7 @@ public class ChatServerThread extends Thread {
     
     private synchronized boolean disconnect() {
     	synchronized(ChatServer.clients) {
-    		ChatServer.clients.remove(this);
+    		clients.remove(this);
     	}
     	
     	return false;
