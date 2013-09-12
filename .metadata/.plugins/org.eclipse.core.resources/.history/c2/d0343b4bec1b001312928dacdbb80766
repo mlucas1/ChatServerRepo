@@ -9,7 +9,7 @@ import java.util.*;
 public class ChatServer {
 	
 	private static final int PORT = 9057;
-	public static ArrayList<ChatServerThread> clients = new ArrayList<ChatServerThread>();
+	private static ArrayList<ChatServerThread> clients = new ArrayList<ChatServerThread>();
 	
 	/**
 	 * @param args
@@ -22,8 +22,8 @@ public class ChatServer {
 			
 			while (true) {
 				ChatServerThread newUser = new ChatServerThread(server.accept());
-				clients.add(newUser);
 				newUser.start();
+				clients.add(newUser);
 			}
 		} 
         catch (IOException e) {

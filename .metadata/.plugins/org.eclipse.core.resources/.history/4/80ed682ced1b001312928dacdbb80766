@@ -8,10 +8,9 @@ import java.net.*;
  * @version 9.11.13
  */
 public class ChatServerThread extends Thread {
-	protected Socket         	socket;
-	protected PrintWriter    	out;
-	protected BufferedReader	in;
-	protected String			username;
+	protected Socket         socket;
+	protected PrintWriter    out;
+	protected BufferedReader in;
     
     public ChatServerThread(Socket socket) {
         super("ChatServerThread");
