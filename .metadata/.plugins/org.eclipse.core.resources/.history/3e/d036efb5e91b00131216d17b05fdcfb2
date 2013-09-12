@@ -19,15 +19,14 @@ public class ChatServer {
         
 		try {
 			ServerSocket server = new ServerSocket(PORT);
-			
-			while (true) {
-				ChatServerThread newUser = new ChatServerThread(server.accept());
-				newUser.start();
-				clients.add(newUser);
-			}
 		} 
         catch (IOException e) {
+			System.out.println("Error: ServerSocket setup");
 			e.printStackTrace();
+		}
+		
+		while (true) {
+			ChatServerThread newUser = new ChatServerThread(server.accept());
 		}
 	}
 }

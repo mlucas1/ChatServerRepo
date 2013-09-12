@@ -22,12 +22,12 @@ public class ChatServer {
 			
 			while (true) {
 				ChatServerThread newUser = new ChatServerThread(server.accept());
-				newUser.start();
-				clients.add(newUser);
 			}
 		} 
         catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+
 	}
 }
