@@ -56,7 +56,15 @@ public class ChatServerThread extends Thread {
     }
     
     private synchronized boolean setNickname(String s) {
-    	return false;
+    	synchronized(ChatServer.clients){
+            for (ChatServerThread user: ChatServer.clients){
+                if (s.equalsIgnoreCase(user.username)){
+                    return false
+                }
+            }
+        }
+        username=s;
+        return True;
     }
     
     private synchronized void broadCastMessage(String s) {
