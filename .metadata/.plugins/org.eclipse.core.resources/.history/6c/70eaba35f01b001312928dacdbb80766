@@ -62,7 +62,7 @@ public class ChatServerThread extends Thread {
     private synchronized void broadCastMessage(String s) {
     	synchronized(ChatServer.clients) {
     		for (ChatServerThread c : ChatServer.clients) {
-    			c.getWriter().println("<" + username + ">"+ " " + s);
+    			c.getWriter().println("<" + username + ">"+ " ");
     		}
     	}
     }
