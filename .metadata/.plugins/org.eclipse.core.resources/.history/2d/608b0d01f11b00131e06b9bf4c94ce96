@@ -59,12 +59,12 @@ public class ChatServerThread extends Thread {
     	synchronized(ChatServer.clients){
             for (ChatServerThread user: ChatServer.clients){
                 if (s.equalsIgnoreCase(user.username)){
-                    return false;
+                    return false
                 }
             }
         }
         username=s;
-        return true;
+        return True;
     }
     
     private synchronized void broadCastMessage(String s) {
