@@ -112,7 +112,7 @@ public class ChatServerThread extends Thread {
         else if (s.substring(0,6).equals("/nick ")) {
         	return 1;
         }
-        else if (s.substring(0,12).equals("/disconnect ")) {
+        else if (s.substring(0,11).equals("/disconnect")) {
         	return 2;
         }
         else
