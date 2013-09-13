@@ -9,7 +9,6 @@ import java.util.*;
 public class ChatServer {
 	
 	private static final int PORT = 9057;
-	public static int totalGuests = 0;
 	public static ArrayList<ChatServerThread> clients = new ArrayList<ChatServerThread>();
 	
 	/**
@@ -22,7 +21,6 @@ public class ChatServer {
 			ServerSocket server = new ServerSocket(PORT);
 			
 			while (true) {
-				totalGuests++;
 				ChatServerThread newUser = new ChatServerThread(server.accept());
 				clients.add(newUser);
 				newUser.start();

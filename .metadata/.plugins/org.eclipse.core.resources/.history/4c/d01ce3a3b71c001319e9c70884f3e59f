@@ -27,9 +27,7 @@ public class ChatServerThread extends Thread {
             System.out.println("New User Connected!");
             
             /* Welcome the user */
-            this.out.println("<System> Welcome!");
-            
-            setNickname("Guest " + ChatServer.totalGuests);
+            this.out.println("Welcome!");
             
         } catch (IOException e) {
             System.out.println("IOException: " + e);
@@ -56,7 +54,7 @@ public class ChatServerThread extends Thread {
                 else if (messageType == 1) { // /nick Matthew
                 	String name = fromClient.substring(5);
                 	if (!setNickname(name)) {
-                		this.out.println("<System> Username unavailable. Try again.");
+                		this.out.println("Username unavailable. Try again.");
                 	}
                 	else
                 		setNickname(name);
@@ -76,13 +74,11 @@ public class ChatServerThread extends Thread {
     private synchronized boolean setNickname(String s) {
     	synchronized(ChatServer.clients){
             for (ChatServerThread user: ChatServer.clients){
-                if (s.equalsIgnoreCase(user.getNickname())){
+                if (s.equalsIgnoreCase(user.username)){
                     return false;
                 }
             }
         }
-    	broadcastMessage("I'm changing my name to " + s);
-    	this.out.println("<System> Your nickname is now " + s);
         username=s;
         return true;
     }

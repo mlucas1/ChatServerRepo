@@ -27,9 +27,7 @@ public class ChatServerThread extends Thread {
             System.out.println("New User Connected!");
             
             /* Welcome the user */
-            this.out.println("<System> Welcome!");
-            
-            setNickname("Guest " + ChatServer.totalGuests);
+            this.out.println("Welcome!");
             
         } catch (IOException e) {
             System.out.println("IOException: " + e);
@@ -47,22 +45,14 @@ public class ChatServerThread extends Thread {
                 
                 int messageType = parse(fromClient);
                 
-                if (messageType == 3) {
-                	this.out.println("<System> Command unrecognizable. Valid commands are: /nick \"username\" and /disconnect");
-                }
-                else if (messageType == 2) {
+                if (messageType == 2) {
                 	disconnect();
                 }
                 else if (messageType == 1) { // /nick Matthew
-                	String name = fromClient.substring(5);
-                	if (!setNickname(name)) {
-                		this.out.println("<System> Username unavailable. Try again.");
+                	if (!setNickname(fromClient.substring(5))) {
+                		this.out.println("Username unavailable. Try again.")
                 	}
-                	else
-                		setNickname(name);
                 }
-                else
-                	broadcastMessage(fromClient);
                 
                 
             } catch (IOException e) {
@@ -76,18 +66,16 @@ public class ChatServerThread extends Thread {
     private synchronized boolean setNickname(String s) {
     	synchronized(ChatServer.clients){
             for (ChatServerThread user: ChatServer.clients){
-                if (s.equalsIgnoreCase(user.getNickname())){
+                if (s.equalsIgnoreCase(user.username)){
                     return false;
                 }
             }
         }
-    	broadcastMessage("I'm changing my name to " + s);
-    	this.out.println("<System> Your nickname is now " + s);
         username=s;
         return true;
     }
     
-    private synchronized void broadcastMessage(String s) {
+    private synchronized void broadCastMessage(String s) {
     	synchronized(ChatServer.clients) {
     		for (ChatServerThread c : ChatServer.clients) {
     			c.getWriter().println("<" + username + ">"+ " " + s);
