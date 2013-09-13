@@ -54,7 +54,7 @@ public class ChatServerThread extends Thread {
                 	disconnect();
                 }
                 else if (messageType == 1) { // /nick Matthew
-                	String name = fromClient.substring(6);
+                	String name = fromClient.substring(5);
                 	if (!setNickname(name)) {
                 		this.out.println("<System> Username unavailable. Try again.");
                 	}
