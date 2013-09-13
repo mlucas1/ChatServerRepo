@@ -109,15 +109,9 @@ public class ChatServerThread extends Thread {
         if(s.charAt(0) != '/') {
         	return 0;
         }
-        else if (s.substring(0,6).equals("/nick ")) {
-        	return 1;
+        else if (s.subString(0,6).equals("/nick ")) {
+        	
         }
-        else if (s.substring(0,12).equals("/disconnect ")) {
-        	return 2;
-        }
-        else
-        	return 3;
-        
     	
     	/*String[] stringArray = s.split("\\w+");
         if (s.charAt(0) != '/') //checks to see if incoming text is a command. If not, it will check to see what type of command it is.
