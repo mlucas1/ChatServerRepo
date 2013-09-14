@@ -26,10 +26,12 @@ public class ChatServerThread extends Thread {
             /* DEBUG */
             System.out.println("New User Connected!");
             
-            /* Welcome the user */
-            this.out.println("<System> Welcome!");
+            
             
             setNickname("Guest " + ChatServer.totalGuests);
+            
+            /* Welcome the user */
+            this.out.println("<System> Welcome to the chatroom! You are " + "\"" + username + "\"" + ". There are " + (ChatServer.clients.size()+1) + " total users in the room.");
             
         } catch (IOException e) {
             System.out.println("IOException: " + e);
@@ -40,6 +42,7 @@ public class ChatServerThread extends Thread {
         /*	This thread will constantly listen for client input, and send it to the server.
          	It will also output messages from other connected clients to this client.
          */
+    	
         while (true) {
             try {
                 /* Get string from client */
@@ -81,9 +84,12 @@ public class ChatServerThread extends Thread {
                 }
             }
         }
-    	if(username != null)
-    		broadcastMessage("I'm changing my name to " + s);
-    	this.out.println("<System> Your nickname is now " + s);
+    	if(username != null) {
+    		synchronized(ChatServer.clients){
+    			for (ChatServerThread c : ChatServer.clients)
+    	        	c.out.println("<System> " + username + "'s nickname is now " + "\"" + s + "\"" + ".");
+    		}
+    	}
         username=s;
         return true;
     }
@@ -96,9 +102,15 @@ public class ChatServerThread extends Thread {
     	}
     }
     
-    private synchronized boolean disconnect() {
+    @SuppressWarnings("deprecation")
+	private synchronized boolean disconnect() {
     	synchronized(ChatServer.clients) {
     		ChatServer.clients.remove(this);
+    		for (ChatServerThread c : ChatServer.clients) {
+    			c.out.println("<System> " + "\"" + username + "\"" + "has disconnected.");
+    		}
+    		this.stop();
+    		
     	}
     	
     	return false;
@@ -109,7 +121,7 @@ public class ChatServerThread extends Thread {
         if(s.charAt(0) != '/') {
         	return 0;
         }
-        else if (s.substring(0,6).equals("/nick ")) {
+        else if (s.substring(0,5).equals("/nick")) {
         	return 1;
         }
         else if (s.substring(0,11).equals("/disconnect")) {

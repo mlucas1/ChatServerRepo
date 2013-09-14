@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class ChatServer {
 	
-	private static final int PORT = 9057;
+	private static final int PORT = 9001;
 	public static int totalGuests = 0;
 	public static ArrayList<ChatServerThread> clients = new ArrayList<ChatServerThread>();
 	
