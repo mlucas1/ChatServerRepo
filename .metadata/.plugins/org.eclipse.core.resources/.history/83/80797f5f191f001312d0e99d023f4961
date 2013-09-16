@@ -64,7 +64,7 @@ public class ChatServerThread extends Thread {
                 	else
                 		setNickname(name);
                 }
-                else if (messageType != -1)
+                else
                 	broadcastMessage(fromClient);
                 
                 
