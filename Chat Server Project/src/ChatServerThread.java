@@ -126,19 +126,16 @@ public class ChatServerThread extends Thread {
     
     private int parse(String s) //returns an integer associated with an interpretation of the intended effect of a message sent to the server
     {
-    	if(s == null) {
+    	if(s == null || s.length() == 0) {
     		return -1;
     	}
     	else if(s.charAt(0) != '/') {
         	return 0;
         }
-        else if (s.length() < 6) {
-            return 3;
-        }   
-        else if (s.substring(0,6).equals("/nick ")) {
+        else if (s.indexOf("/nick") == 0){//(s.substring(0,6).equals("/nick ")) {
         	return 1;
         }
-        else if (s.substring(0,11).equals("/disconnect")) {
+        else if (s.indexOf("/disconnect"){//(s.substring(0,11).equals("/disconnect")) {
         	return 2;
         }
         else
