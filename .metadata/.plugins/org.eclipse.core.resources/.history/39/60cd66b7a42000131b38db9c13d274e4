@@ -30,16 +30,14 @@ public class ChatServerThread extends Thread {
             
             setNickname("Guest " + ChatServer.totalGuests);
             
-            synchronized(ChatServer.clients){
-                for (ChatServerThread user: ChatServer.clients){
-                    this.out.println("<System> New user joined: " + username);
-                }
-            }
-            
             /* Welcome the user */
             this.out.println("<System> Welcome to the chatroom! You are " + "\"" + username + "\"" + ". There are " + (ChatServer.clients.size()+1) + " total users in the room.");
             
-            
+            synchronized(ChatServer.clients){
+                for (ChatServerThread user: ChatServer.clients){
+                    this.out.println("<System> New user joined: " + username)
+                }
+            }
             
         } catch (IOException e) {
             System.out.println("IOException: " + e);
