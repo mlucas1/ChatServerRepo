@@ -125,7 +125,7 @@ public class ChatServerThread extends Thread {
     	if (canMessage){
             synchronized(room.clients) {
                 for (ChatServerThread c : room.clients) {
-                    c.getWriter().println("<" + username + ">"+ " " + s);
+                    c.getWriter().println(timeStamp() + " <" + username + ">"+ " " + s);
                 }
             }
         }
