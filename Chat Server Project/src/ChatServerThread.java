@@ -177,6 +177,12 @@ public class ChatServerThread extends Thread {
     	return out;
     }
     
-    
+    private String timeStamp(){
+    	long time = System.currentTimeMillis();
+    	time /= 1000;
+	int hours = time / 3600;
+    	int minutes = (time - 3600 * hours)/60;
+	int seconds = time - 3600  * horus - 60 * minutes;
+	return ("<"+hours+ ":"+minutes+":"+seconds+">");
 
 }
