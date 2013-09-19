@@ -126,39 +126,20 @@ public class ChatServerThread extends Thread {
     
     private int parse(String s) //returns an integer associated with an interpretation of the intended effect of a message sent to the server
     {
-    	if(s == null || s.length() == 0) {
+    	if(s == null || s.length() == 0) {//checks to see if input string is empty or null[
     		return -1;
     	}
-    	else if(s.charAt(0) != '/') {
+    	else if(s.charAt(0) != '/') {//checks to see if the input string is a command
         	return 0;
         }
-        else if (s.indexOf("/nick ") == 0){//(s.substring(0,6).equals("/nick ")) {
+        else if (s.indexOf("/nick ") == 0){//checks to see if user is attempting to rename themselves
         	return 1;
         }
-        else if (s.equals("/disconnect")){//(s.substring(0,11).equals("/disconnect")) {
+        else if (s.equals("/disconnect")){//checks to see if user is attempting to disconnect
         	return 2;
         }
         else
         	return 3;
-        
-    	
-    	/*String[] stringArray = s.split("\\w+");
-        if (s.charAt(0) != '/') //checks to see if incoming text is a command. If not, it will check to see what type of command it is.
-        {
-            return 0;
-        }
-        else if (stringArray[0].equals( "/nick"))//checks to see if incoming text is intended to rename the user
-        {
-            return 1;
-        }
-        else if (stringArray[1].equals("/disconnect"))//checks to see if incoming text ins intended to disconnect the user
-        {
-            return 2;
-        }
-        else//checks to see if command is nonsensical, and thus can be disregarded or responded to privately with an error message.
-        {
-            return 3;
-        }*/
     }
     
     public String getNickname() {
