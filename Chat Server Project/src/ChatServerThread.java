@@ -184,5 +184,6 @@ public class ChatServerThread extends Thread {
     	int minutes = (time - 3600 * hours)/60;
 	int seconds = time - 3600  * horus - 60 * minutes;
 	return ("<"+hours+ ":"+minutes+":"+seconds+">");
+    }
 
 }
