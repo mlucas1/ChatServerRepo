@@ -34,6 +34,11 @@ public class ChatServerThread extends Thread {
             room=ChatServer.antechamber;
             canMessage=false;
             
+            synchronized(ChatServer.clients){
+                for (ChatServerThread user: ChatServer.clients){
+                    user.out.println("<System> New user joined: " + username);
+                }
+            }
             
             /* Welcome the user */
             this.out.println("<System> Welcome to the chatroom! You are " + "\"" + username+"\".");
@@ -91,12 +96,6 @@ public class ChatServerThread extends Thread {
             return false;
         }
         room=ChatServer.rooms.get(roomName);
-        synchronized(room.clients){
-            for (ChatServerThread user : room.clients){
-                user.out.println("<System> New user joined: " + username);
-            }
-        }
-        
         canMessage = true;
         return true;
     }
@@ -110,11 +109,9 @@ public class ChatServerThread extends Thread {
             }
         }
     	if(username != null) {
-    		if(canMessage) {
-    			synchronized(room.clients){
-    				for (ChatServerThread c : room.clients)
-    					c.out.println("<System> " + username + "'s nickname is now " + "\"" + s + "\"" + ".");
-    			}
+    		synchronized(ChatServer.clients){
+    			for (ChatServerThread c : ChatServer.clients)
+    	        	c.out.println("<System> " + username + "'s nickname is now " + "\"" + s + "\"" + ".");
     		}
     	}
         username=s;
@@ -159,10 +156,10 @@ public class ChatServerThread extends Thread {
         else if (s.equals("/disconnect")){//checks to see if user is attempting to disconnect
         	return 2;
         }
-        else if (s.indexOf("/join ") == 0){//checks to see if user is attempting to join an existing chatroom
+        else if (s.substring(0,6).equals("/join ")){
             return 4;
         }
-        else if (s.indexOf("/newRoom ") == 0){//checks to see if user is attempting to create a new chatroom
+        else if (s.substring(0,9).equals("/newRoom ")){
             return 5;
         }
         else

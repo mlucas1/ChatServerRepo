@@ -110,11 +110,9 @@ public class ChatServerThread extends Thread {
             }
         }
     	if(username != null) {
-    		if(canMessage) {
-    			synchronized(room.clients){
-    				for (ChatServerThread c : room.clients)
-    					c.out.println("<System> " + username + "'s nickname is now " + "\"" + s + "\"" + ".");
-    			}
+    		synchronized(room.clients){
+    			for (ChatServerThread c : room.clients)
+    	        	c.out.println("<System> " + username + "'s nickname is now " + "\"" + s + "\"" + ".");
     		}
     	}
         username=s;
@@ -159,10 +157,10 @@ public class ChatServerThread extends Thread {
         else if (s.equals("/disconnect")){//checks to see if user is attempting to disconnect
         	return 2;
         }
-        else if (s.indexOf("/join ") == 0){//checks to see if user is attempting to join an existing chatroom
+        else if (s.substring(0,6).equals("/join ")){
             return 4;
         }
-        else if (s.indexOf("/newRoom ") == 0){//checks to see if user is attempting to create a new chatroom
+        else if (s.substring(0,9).equals("/newRoom ")){
             return 5;
         }
         else
