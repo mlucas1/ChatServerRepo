@@ -9,14 +9,18 @@ import java.util.*;
 public class ChatServer {
 	
 	private static final int PORT = 9001;
+    public static int totalRooms = 0;
 	public static int totalGuests = 0;
+    public static HashMap<String,ChatRoom> rooms = new HashMap<String,ChatRoom>();
 	public static ArrayList<ChatServerThread> clients = new ArrayList<ChatServerThread>();
+    public static ChatRoom antechamber;
 	
 	/**
 	 * @param args
 	 */
 	@SuppressWarnings("resource")
 	public static void main(String[] args) { 
+        antechamber = new ChatRoom();
         
 		try {
 			ServerSocket server = new ServerSocket(PORT);
@@ -24,6 +28,7 @@ public class ChatServer {
 			while (true) {
 				totalGuests++;
 				ChatServerThread newUser = new ChatServerThread(server.accept());
+                antechamber.addClient(ChatServerThread);
 				clients.add(newUser);
 				newUser.start();
 			}
