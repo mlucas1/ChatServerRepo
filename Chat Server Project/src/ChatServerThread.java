@@ -36,7 +36,7 @@ public class ChatServerThread extends Thread {
             
             
             /* Welcome the user */
-            this.out.println("<System> Welcome to the chatroom! You are " + "\"" + username+"\".");
+            this.out.println("<System> Welcome to the chatroom! You are " + "\"" + username + "\"" + ". There are " + (room.clients.size()+1) + " total users in the room.");
             
             
         } catch (IOException e) {
