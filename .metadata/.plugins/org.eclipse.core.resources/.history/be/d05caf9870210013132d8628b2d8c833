@@ -13,7 +13,7 @@ public class ChatServerThread extends Thread {
 	protected BufferedReader	in;
 	protected String			username;
     protected ChatRoom          room;
-    protected boolean           canMessage;
+    protected boolean           inRealRoom;
     
     public ChatServerThread(Socket socket) {
         super("ChatServerThread");
@@ -32,7 +32,7 @@ public class ChatServerThread extends Thread {
             
             setNickname("Guest " + ChatServer.totalGuests);
             room=ChatServer.antechamber;
-            canMessage=false;
+            inRealRoom=false;
             
             synchronized(ChatServer.clients){
                 for (ChatServerThread user: ChatServer.clients){

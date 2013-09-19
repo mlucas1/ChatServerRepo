@@ -28,7 +28,7 @@ public class ChatServer {
 			while (true) {
 				totalGuests++;
 				ChatServerThread newUser = new ChatServerThread(server.accept());
-                antechamber.addClient(newUser);
+                antechamber.addClient(ChatServerThread);
 				clients.add(newUser);
 				newUser.start();
 			}

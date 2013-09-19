@@ -8,8 +8,8 @@ import java.util.*;
  */
 public class ChatRoom {
 	
-	protected String roomName;
-    protected ArrayList<ChatServerThread> clients;
+	private String roomName;
+    private ArrayList<ChatServerThread> clients;
     
     public ChatRoom(){
         clients = new ArrayList<ChatServerThread>();

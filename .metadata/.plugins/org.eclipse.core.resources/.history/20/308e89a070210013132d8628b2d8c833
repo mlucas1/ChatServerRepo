@@ -32,7 +32,7 @@ public class ChatServerThread extends Thread {
             
             setNickname("Guest " + ChatServer.totalGuests);
             room=ChatServer.antechamber;
-            canMessage=false;
+            inRealRoom=false;
             
             synchronized(ChatServer.clients){
                 for (ChatServerThread user: ChatServer.clients){
