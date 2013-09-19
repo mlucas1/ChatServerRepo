@@ -12,6 +12,8 @@ public class ChatServerThread extends Thread {
 	protected PrintWriter    	out;
 	protected BufferedReader	in;
 	protected String			username;
+    protected ChatRoom          room;
+    protected boolean           inRealRoom;
     
     public ChatServerThread(Socket socket) {
         super("ChatServerThread");
@@ -29,6 +31,8 @@ public class ChatServerThread extends Thread {
             
             
             setNickname("Guest " + ChatServer.totalGuests);
+            room=ChatServer.antechamber;
+            inRealRoom=false;
             
             synchronized(ChatServer.clients){
                 for (ChatServerThread user: ChatServer.clients){
@@ -37,8 +41,7 @@ public class ChatServerThread extends Thread {
             }
             
             /* Welcome the user */
-            this.out.println("<System> Welcome to the chatroom! You are " + "\"" + username + "\"" + ". There are " + (ChatServer.clients.size()+1) + " total users in the room.");
-            
+            this.out.println("<System> Welcome to the chatroom! You are " + "\"" + username+"\".");
             
             
         } catch (IOException e) {
@@ -72,6 +75,10 @@ public class ChatServerThread extends Thread {
                 	else
                 		setNickname(name);
                 }
+                else if (messageType == 4){
+                    String roomName = fromClient.substring(6);
+                    joinRoom(roomName);
+                }
                 else if (messageType != -1)
                 	broadcastMessage(fromClient);
                 
@@ -82,6 +89,15 @@ public class ChatServerThread extends Thread {
                 return;
             }
         }
+    }
+    
+    public boolean joinRoom(String roomName){
+        if (ChatServer.rooms.containsKey(roomName)){
+            return false;
+        }
+        room=ChatServer.rooms.get(roomName);
+        canMessage=true;
+        return true;
     }
     
     private synchronized boolean setNickname(String s) {
@@ -103,11 +119,13 @@ public class ChatServerThread extends Thread {
     }
     
     private synchronized void broadcastMessage(String s) {
-    	synchronized(ChatServer.clients) {
-    		for (ChatServerThread c : ChatServer.clients) {
-    			c.getWriter().println("<" + username + ">"+ " " + s);
-    		}
-    	}
+    	if (canMessage){
+            synchronized(room.clients) {
+                for (ChatServerThread c : room.clients) {
+                    c.getWriter().println("<" + username + ">"+ " " + s);
+                }
+            }
+        }
     }
     
     @SuppressWarnings("deprecation")
@@ -137,6 +155,12 @@ public class ChatServerThread extends Thread {
         }
         else if (s.equals("/disconnect")){//checks to see if user is attempting to disconnect
         	return 2;
+        }
+        else if (s.substring(0,6).equals("/join ")){
+            return 4;
+        }
+        else if (s.substring(0,9).equals("/newRoom ")){
+            return 5;
         }
         else
         	return 3;
