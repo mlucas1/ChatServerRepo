@@ -74,6 +74,10 @@ public class ChatServerThread extends Thread {
                     String roomName = fromClient.substring(6);
                     joinRoom(roomName);
                 }
+                else if (messageType == 5){
+                    String roomName = fromClient.substring(9);
+                    newRoom(roomName);
+                }
                 else if (messageType != -1)
                 	broadcastMessage(fromClient);
                 
@@ -87,7 +91,7 @@ public class ChatServerThread extends Thread {
     }
     
     public boolean joinRoom(String roomName){
-        if (ChatServer.rooms.containsKey(roomName)){
+        if (!ChatServer.rooms.containsKey(roomName)){
             return false;
         }
         room=ChatServer.rooms.get(roomName);
@@ -98,6 +102,16 @@ public class ChatServerThread extends Thread {
         }
         
         canMessage = true;
+        return true;
+    }
+    
+    public boolean newRoom(String roomName){
+        if (ChatServer.rooms.containsKey(roomName)){
+            return false;
+        }
+        ChatRoom theNewRoom=new ChatRoom();
+        ChatServer.rooms.put(roomName,theNewRoom);
+        joinRoom(roomName);
         return true;
     }
     
