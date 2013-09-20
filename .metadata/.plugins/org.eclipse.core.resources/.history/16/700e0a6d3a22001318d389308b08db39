@@ -36,14 +36,11 @@ public class ChatServerThread extends Thread {
             
             
             /* Welcome the user */
-
             this.out.println( "<System> Welcome to the chat server antechamber! You are " + "<" + username + ">" + "\n"
             				+ "<System> To create a new chatroom, type:		\"/newRoom [room name]\"\n"
             				+ "<System> To join a chatroom, type: 			\"/join [room name]\"\n"
             				+ "<System> To change your nickname, type:			\"/nick [name]\"\n"
             				+ "<System> To disconnect from the chat server,type: 	\"/disconnect\"");
-            this.out.println("<System> Welcome to the chatroom! You are " + "\"" + username + "\"" + ". There are " + (room.clients.size()+1) + " total users in the room.");
-
             
             
         } catch (IOException e) {
@@ -64,7 +61,7 @@ public class ChatServerThread extends Thread {
                 int messageType = parse(fromClient);
                 
                 if (messageType == 3) {
-                	this.out.println("<System> Command unrecognizable. Valid commands are: \"/nick [username]\" and \"/disconnect\"");
+                	this.out.println("<System> Command unrecognizable. Valid commands are: /nick \"username\" and /disconnect");
                 }
                 else if (messageType == 2) {
                 	disconnect();
@@ -81,10 +78,6 @@ public class ChatServerThread extends Thread {
                     String roomName = fromClient.substring(6);
                     joinRoom(roomName);
                 }
-                else if (messageType == 5){
-                    String roomName = fromClient.substring(9);
-                    newRoom(roomName);
-                }
                 else if (messageType != -1)
                 	broadcastMessage(fromClient);
                 
@@ -98,7 +91,7 @@ public class ChatServerThread extends Thread {
     }
     
     public boolean joinRoom(String roomName){
-        if (!ChatServer.rooms.containsKey(roomName)){
+        if (ChatServer.rooms.containsKey(roomName)){
             return false;
         }
         room=ChatServer.rooms.get(roomName);
@@ -109,16 +102,6 @@ public class ChatServerThread extends Thread {
         }
         
         canMessage = true;
-        return true;
-    }
-    
-    public boolean newRoom(String roomName){
-        if (ChatServer.rooms.containsKey(roomName)){
-            return false;
-        }
-        ChatRoom theNewRoom=new ChatRoom();
-        ChatServer.rooms.put(roomName,theNewRoom);
-        joinRoom(roomName);
         return true;
     }
     
@@ -138,7 +121,7 @@ public class ChatServerThread extends Thread {
     			}
     		}
     		else
-    			this.out.println("<System> " + username + "'s nickname is now " + "\"" + s + "\"");
+    			this.out.println("<System> " + username + "'s nickname is now " + "\"" + s + "\"")
     	}
         username=s;
         return true;
@@ -159,7 +142,7 @@ public class ChatServerThread extends Thread {
     	synchronized(ChatServer.clients) {
     		ChatServer.clients.remove(this);
     		for (ChatServerThread c : ChatServer.clients) {
-    			c.out.println("<System> " + "\"" + username + "\"" + "has disconnected");
+    			c.out.println("<System> " + "\"" + username + "\"" + "has disconnected.");
     		}
     		this.stop();
     		
