@@ -42,8 +42,9 @@ public class ChatServerThread extends Thread {
             				+ "<System> To join a chatroom, type: 			\"/join [room name]\"\n"
             				+ "<System> To change your nickname, type:			\"/nick [name]\"\n"
             				+ "<System> To disconnect from the chat server,type: 	\"/disconnect\"");
+=======
             this.out.println("<System> Welcome to the chatroom! You are " + "\"" + username + "\"" + ". There are " + (room.clients.size()+1) + " total users in the room.");
-
+>>>>>>> cf543fa22812fcf69b2a50417239efe1e850f147
             
             
         } catch (IOException e) {
