@@ -61,7 +61,7 @@ public class ChatServerThread extends Thread {
                 int messageType = parse(fromClient);
                 
                 if (messageType == 3) {
-                	this.out.println("<System> Command unrecognizable. Valid commands are: \"/nick [username]\" and \"/disconnect\"");
+                	this.out.println("<System> Command unrecognizable. Valid commands are: /nick \"username\" and /disconnect");
                 }
                 else if (messageType == 2) {
                 	disconnect();
@@ -69,7 +69,7 @@ public class ChatServerThread extends Thread {
                 else if (messageType == 1) { // /nick Matthew
                 	String name = fromClient.substring(6);
                 	if (!setNickname(name)) {
-                		this.out.println("<System> Username unavailable. Try again.");
+                		this.out.println("<System> Username unavailable. Try again");
                 	}
                 	else
                 		setNickname(name);
