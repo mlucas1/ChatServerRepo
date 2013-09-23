@@ -11,14 +11,11 @@ public class ChatRoom {
 	protected String roomName;
     protected ArrayList<ChatServerThread> clients;
     
-    public ChatRoom(String s){
-        roomName = s;
-    	clients = new ArrayList<ChatServerThread>();
+    public ChatRoom(){
+        clients = new ArrayList<ChatServerThread>();
     }
     
     public void addClient(ChatServerThread client){
         clients.add(client);
     }
-    
-    
 }

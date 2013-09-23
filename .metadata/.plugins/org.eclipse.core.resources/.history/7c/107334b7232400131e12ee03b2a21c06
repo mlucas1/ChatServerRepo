@@ -138,7 +138,7 @@ public class ChatServerThread extends Thread {
         if (ChatServer.rooms.containsKey(roomName)){
             return false;
         }
-        ChatRoom theNewRoom=new ChatRoom(roomName);
+        ChatRoom theNewRoom=new ChatRoom();
         ChatServer.rooms.put(theNewRoom.roomName,theNewRoom);
         joinRoom(roomName);
         ChatServer.totalRooms++;

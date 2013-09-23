@@ -37,7 +37,6 @@ public class ChatServerThread extends Thread {
             /* Welcome the user */
 
             this.out.println( "<System> Welcome to the chat server antechamber! You are " + "<" + username + ">" + "\n"
-            				+ "	 To see a list of all open rooms, type:		\"/listRooms\"\n"
             				+ "	 To create a new chatroom, type:		\"/newRoom [room name]\"\n"
             				+ "	 To join a chatroom, type: 			\"/join [room name]\"\n"
             				+ "	 To change your nickname, type:			\"/nick [name]\"\n"
@@ -65,7 +64,6 @@ public class ChatServerThread extends Thread {
                 if (messageType == 3) {
                 	this.out.println("<System> Command unrecognizable. Valid commands are:\n"
                 				   + "         \"/newRoom [room name]\"\n"
-                				   + "         \"/listRooms\n"
                 				   + "         \"/join [room name]\"\n"
                 				   + "         \"/nick [username]\"\n"
                 				   + "         \"/disconnect\"");
@@ -89,12 +87,6 @@ public class ChatServerThread extends Thread {
                     String roomName = fromClient.substring(9);
                     newRoom(roomName);
                 }
-                else if (messageType == 6){
-                	String roomsList = "";
-                	for (String roomName : ChatServer.rooms.keySet())
-                		roomsList += (roomName + ", ");
-                	this.out.println("<System> Open rooms: " + roomsList);
-                }
                 else if (messageType != -1)
                 	broadcastMessage(fromClient);
                 
@@ -107,26 +99,14 @@ public class ChatServerThread extends Thread {
         }
     }
     
-    public boolean leaveRoom(){
-        synchronized(room.clients){
-            room.clients.remove(this);
-        	for (ChatServerThread user : room.clients){
-                user.out.println("<System> New user joined: " + username);
-            }
-        }
-        return true;
-    }
-    
     public boolean joinRoom(String roomName){
-        this.leaveRoom();
-    	if (!ChatServer.rooms.containsKey(roomName)){
+        if (!ChatServer.rooms.containsKey(roomName)){
             return false;
         }
         room=ChatServer.rooms.get(roomName);
-        room.clients.add(this);
         synchronized(room.clients){
             for (ChatServerThread user : room.clients){
-                user.out.println("<System> New user joined room \"" + room.roomName + "\": " + username);
+                user.out.println("<System> New user joined: " + username);
             }
         }
         
@@ -138,8 +118,8 @@ public class ChatServerThread extends Thread {
         if (ChatServer.rooms.containsKey(roomName)){
             return false;
         }
-        ChatRoom theNewRoom=new ChatRoom(roomName);
-        ChatServer.rooms.put(theNewRoom.roomName,theNewRoom);
+        ChatRoom theNewRoom=new ChatRoom();
+        ChatServer.rooms.put(roomName,theNewRoom);
         joinRoom(roomName);
         ChatServer.totalRooms++;
         return true;
@@ -171,7 +151,7 @@ public class ChatServerThread extends Thread {
     	if (canMessage){
             synchronized(room.clients) {
                 for (ChatServerThread c : room.clients) {
-                    c.out.println(timeStamp() + " <" + username + ">"+ " " + s);
+                    c.getWriter().println(timeStamp() + " <" + username + ">"+ " " + s);
                 }
             }
         }
@@ -182,7 +162,7 @@ public class ChatServerThread extends Thread {
     	synchronized(ChatServer.clients) {
     		ChatServer.clients.remove(this);
     		for (ChatServerThread c : ChatServer.clients) {
-    			c.out.println("<System> " + "\" " + username + "\"" + "has disconnected");
+    			c.out.println("<System> " + "\"" + username + "\"" + "has disconnected");
     		}
     		this.stop();
     		
@@ -211,10 +191,6 @@ public class ChatServerThread extends Thread {
         else if (s.indexOf("/newRoom ") == 0){//checks to see if user is attempting to create a new chatroom
             return 5;
         }
-        else if(s.equals("/listRooms")) {
-        	return 6;
-        }
-    	
         else
         	return 3;
     }

@@ -20,7 +20,7 @@ public class ChatServer {
 	 */
 	@SuppressWarnings("resource")
 	public static void main(String[] args) { 
-        antechamber = new ChatRoom("antechamber");
+        antechamber = new ChatRoom();
         
 		try {
 			ServerSocket server = new ServerSocket(PORT);

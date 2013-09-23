@@ -108,13 +108,7 @@ public class ChatServerThread extends Thread {
     }
     
     public boolean leaveRoom(){
-        synchronized(room.clients){
-            room.clients.remove(this);
-        	for (ChatServerThread user : room.clients){
-                user.out.println("<System> New user joined: " + username);
-            }
-        }
-        return true;
+    	this.room.clients.remove(this);
     }
     
     public boolean joinRoom(String roomName){
@@ -126,7 +120,7 @@ public class ChatServerThread extends Thread {
         room.clients.add(this);
         synchronized(room.clients){
             for (ChatServerThread user : room.clients){
-                user.out.println("<System> New user joined room \"" + room.roomName + "\": " + username);
+                user.out.println("<System> New user joined: " + username);
             }
         }
         
@@ -138,8 +132,8 @@ public class ChatServerThread extends Thread {
         if (ChatServer.rooms.containsKey(roomName)){
             return false;
         }
-        ChatRoom theNewRoom=new ChatRoom(roomName);
-        ChatServer.rooms.put(theNewRoom.roomName,theNewRoom);
+        ChatRoom theNewRoom=new ChatRoom();
+        ChatServer.rooms.put(roomName,theNewRoom);
         joinRoom(roomName);
         ChatServer.totalRooms++;
         return true;
