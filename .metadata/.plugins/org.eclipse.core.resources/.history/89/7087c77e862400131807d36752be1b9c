@@ -92,7 +92,7 @@ public class ChatServerThread extends Thread {
                 else if (messageType == 6){
                 	String roomsList = "";
                 	for (String roomName : ChatServer.rooms.keySet())
-                		roomsList += (roomName + " " + ChatServer.rooms.get(roomName).clients.size() + " user(s)" + ", ");
+                		roomsList += (roomName + ", ");
                 	this.out.println("<System> Open rooms: " + roomsList);
                 }
                 else if (messageType != -1)
@@ -142,7 +142,7 @@ public class ChatServerThread extends Thread {
         ChatServer.rooms.put(theNewRoom.roomName,theNewRoom);
         synchronized(ChatServer.clients){
             for (ChatServerThread user : ChatServer.clients){
-                user.out.println("<System> " + username + " has created a new room: \"" + theNewRoom.roomName + "\"");
+                user.out.println("<System> A user has joined room \"" + theNewRoom.roomName + "\": ");
             }
         }
         

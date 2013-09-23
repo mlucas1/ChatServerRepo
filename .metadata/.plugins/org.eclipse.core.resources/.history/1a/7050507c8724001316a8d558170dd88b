@@ -92,7 +92,7 @@ public class ChatServerThread extends Thread {
                 else if (messageType == 6){
                 	String roomsList = "";
                 	for (String roomName : ChatServer.rooms.keySet())
-                		roomsList += (roomName + " " + ChatServer.rooms.get(roomName).clients.size() + " user(s)" + ", ");
+                		roomsList += (roomName + ", ");
                 	this.out.println("<System> Open rooms: " + roomsList);
                 }
                 else if (messageType != -1)
